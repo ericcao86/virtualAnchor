@@ -1,0 +1,7 @@
+# Project exclude paths
+/tps-beans/target/
+/tps-dao/target/
+/tps-foundtion/target/
+/tps-service/target/
+/tps-utils/target/
+/tps-web/target/
