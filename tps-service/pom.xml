@@ -10,6 +10,17 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>tps-service</artifactId>
-
+    <dependencies>
+        <dependency>
+            <groupId>com.iflytek</groupId>
+            <artifactId>tps-beans</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.iflytek</groupId>
+            <artifactId>tps-foundtion</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
 
 </project>

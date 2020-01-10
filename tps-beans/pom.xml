@@ -10,12 +10,5 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>tps-beans</artifactId>
-   <dependencies>
-       <dependency>
-           <groupId>com.iflytek</groupId>
-           <artifactId>tps-foundtion</artifactId>
-           <version>0.0.1-SNAPSHOT</version>
-       </dependency>
-   </dependencies>
 
 </project>

@@ -14,7 +14,7 @@ public class SwaggerConfig {
 
     public Docket configSpringFoxDocketForAll(){
         return  new Docket(DocumentationType.SWAGGER_2).apiInfo(apiInfo()).select()
-                .apis(RequestHandlerSelectors.basePackage("com.iflytek.web")).paths(PathSelectors.any()).build();
+                .apis(RequestHandlerSelectors.basePackage("com.iflytek.tps")).paths(PathSelectors.any()).build();
     }
 
     private ApiInfo apiInfo(){
