@@ -1,13 +1,23 @@
-package com.iflytek.tps.beans.request;
+package com.iflytek.tps.service.request;
 
-public class RequestDto {
+import com.iflytek.tps.foun.dto.IRequest;
 
+import javax.validation.constraints.NotNull;
+
+public class RequestDto implements IRequest {
+
+    @NotNull
     private String frame;//音频字节
+    @NotNull
     private String sid;//音频id
+    @NotNull
     private Integer idx;//音频顺序
+
     private Integer isLast;//是否最后一包 1是0否
+
+    @NotNull
     private Integer sampleRate;//采样率 8为8k，16为16k
-    private String url;
+
 
     public String getFrame() {
         return frame;
@@ -49,13 +59,6 @@ public class RequestDto {
         this.sampleRate = sampleRate;
     }
 
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
 
     @Override
     public String toString() {
@@ -66,5 +69,10 @@ public class RequestDto {
                 ", isLast=" + isLast +
                 ", sampleRate=" + sampleRate +
                 '}';
+    }
+
+    @Override
+    public void verify() {
+
     }
 }

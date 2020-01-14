@@ -32,7 +32,7 @@ public class IatFormatSentence {
 
         } catch (Exception e) {
             e.printStackTrace();
-            resultBuff.append("exp: ").append(e.getMessage());
+           // resultBuff.append("exp: ").append(e.getMessage());
         }
         return resultBuff.toString();
     }

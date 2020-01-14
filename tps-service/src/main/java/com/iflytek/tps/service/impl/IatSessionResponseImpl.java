@@ -33,7 +33,7 @@ public class IatSessionResponseImpl implements IatSessionResponse {
 
     @Override
     public void onCallback(IatSessionResult iatSessionResult) {
-        logger.info("当前解析 sid {}，idx {} 的音频信息",sid,idx);
+        logger.info("当前解析 sid: {}，idx :{} 的音频信息",sid,idx);
         logger.info("code:{}", iatSessionResult.getErrCode());
         logger.info("str:{}", iatSessionResult.getAnsStr());
         logger.info("flag:{}", iatSessionResult.isEndFlag());

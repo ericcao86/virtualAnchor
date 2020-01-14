@@ -18,6 +18,6 @@ public class SwaggerConfig {
     }
 
     private ApiInfo apiInfo(){
-        return new ApiInfo("TPS REST API DOCUMENT","TPS DESCRIPTION","1.0.0","","Eric Cao","iflytek","");
+        return new ApiInfo("TPS REST API DOCUMENT","TPS DESCRIPTION","1.0.0","","Eric Cao","iflytek","http://www.iflytek.com");
     }
 }
