@@ -5,6 +5,7 @@ package com.iflytek.tps.service;
 import com.iflytek.tps.beans.common.Commons;
 import com.iflytek.tps.beans.transfer.IstSessionParam;
 import com.iflytek.tps.beans.transfer.IstSessionResponse;
+import com.iflytek.tps.foun.util.ByteUtils;
 import com.iflytek.tps.service.client.IstClient;
 import com.iflytek.tps.service.impl.IstSessionResponseImpl;
 import com.iflytek.tps.service.request.RequestDto;
@@ -42,7 +43,7 @@ public class IstService {
             return resMap;
         }
         try {
-            byte[]bytes = requestDto.getFrame().getBytes("UTF-8");
+            byte [] bytes = ByteUtils.utf8Bytes(requestDto.getFrame());
             client.post(bytes);
             client.end();
             logger.info("sid"+requestDto.getSid()+" idx:"+requestDto.getIdx() + "：音频数据发送完毕！等待结果返回...");

@@ -47,7 +47,7 @@ public class IatSessionResponseImpl implements IatSessionResponse {
             String sidres = sid;
             String resultStr = buffer.toString();
             //TODO 发送回调接口
-            HttpClientResult result = doPost(sidres,resultStr);
+            HttpClientResult result = doPost(sidres,resultStr);//第一次发送
             if(result.getCode() != 200){//如果不等于200
                 HttpClientResult result1 = doPost(sidres,resultStr);//发送第二次
                 if (result1.getCode() != 200){
