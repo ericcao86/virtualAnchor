@@ -28,7 +28,7 @@ public class IstSessionParam {
     /**
      * [0~600000] 引擎参数,vad后断点值, 整数毫秒,取值范围[0-60000]（暂时无用，做保留参数）
      */
-    private String eos = "3000";
+    private String eos = "600000";
 
     /**
      * wpgs 引擎参数,是否获取中间结果

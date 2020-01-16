@@ -41,6 +41,7 @@ public class IatSessionResponseImpl implements IatSessionResponse {
         logger.info("sentence:{}",sentence);
         if(isLast == 0){//如果不是最后一包
             resList.add(sentence);
+            System.out.println("当前解析结果："+sentence);
         }else{
             StringBuffer buffer = new StringBuffer();
             resList.stream().forEach(e->buffer.append(e));
@@ -57,6 +58,7 @@ public class IatSessionResponseImpl implements IatSessionResponse {
                 }
             }
         }
+
     }
 
     private HttpClientResult doPost(String sid,String result){

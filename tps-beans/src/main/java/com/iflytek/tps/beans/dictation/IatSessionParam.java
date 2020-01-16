@@ -180,4 +180,21 @@ public class IatSessionParam {
     public void setSamplesInfo(String samplesInfo) {
         this.samplesInfo = samplesInfo;
     }
+
+    @Override
+    public String toString() {
+        return "IatSessionParam{" +
+                "sid='" + sid + '\'' +
+                ", aue='" + aue + '\'' +
+                ", rst='" + rst + '\'' +
+                ", rse='" + rse + '\'' +
+                ", eos='" + eos + '\'' +
+                ", dwa='" + dwa + '\'' +
+                ", wbest='" + wbest + '\'' +
+                ", wbestonlyper='" + wbestonlyper + '\'' +
+                ", rate='" + rate + '\'' +
+                ", hotword='" + hotword + '\'' +
+                ", samplesInfo='" + samplesInfo + '\'' +
+                '}';
+    }
 }

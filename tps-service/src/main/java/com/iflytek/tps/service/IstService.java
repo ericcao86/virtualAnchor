@@ -9,6 +9,7 @@ import com.iflytek.tps.foun.util.ByteUtils;
 import com.iflytek.tps.service.client.IstClient;
 import com.iflytek.tps.service.impl.IstSessionResponseImpl;
 import com.iflytek.tps.service.request.RequestDto;
+import org.apache.commons.codec.binary.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -43,7 +44,7 @@ public class IstService {
             return resMap;
         }
         try {
-            byte [] bytes = ByteUtils.utf8Bytes(requestDto.getFrame());
+            byte [] bytes = Base64.decodeBase64(requestDto.getFrame());
             client.post(bytes);
             client.end();
             logger.info("sid"+requestDto.getSid()+" idx:"+requestDto.getIdx() + "：音频数据发送完毕！等待结果返回...");
