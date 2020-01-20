@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import com.alibaba.fastjson.JSON;
 import com.iflytek.tps.foun.dto.HttpClientResult;
 import org.apache.http.HttpStatus;
 import org.apache.http.NameValuePair;
@@ -22,6 +23,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.client.utils.URIBuilder;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
@@ -125,7 +127,7 @@ public class HttpClientUtils {
      * @throws Exception
      */
     public static HttpClientResult doPost(String url) throws Exception {
-        return doPost(url, null, null);
+        return doPost(url, null, null,null);
     }
 
     /**
@@ -137,7 +139,18 @@ public class HttpClientUtils {
      * @throws Exception
      */
     public static HttpClientResult doPost(String url, Map<String, String> params) throws Exception {
-        return doPost(url, null, params);
+        return doPost(url, null, params,null);
+    }
+
+    /**
+     * 请求体为对象
+     * @param url
+     * @param obj
+     * @return
+     * @throws Exception
+     */
+    public static HttpClientResult doPost(String url,Object obj)throws Exception{
+        return  doPost(url,null,null,obj);
     }
 
     /**
@@ -149,7 +162,7 @@ public class HttpClientUtils {
      * @return
      * @throws Exception
      */
-    public static HttpClientResult doPost(String url, Map<String, String> headers, Map<String, String> params) throws Exception {
+    public static HttpClientResult doPost(String url, Map<String, String> headers, Map<String, String> params,Object obj) throws Exception {
         // 创建httpClient对象
         CloseableHttpClient httpClient = HttpClients.createDefault();
 
@@ -174,6 +187,8 @@ public class HttpClientUtils {
 
         // 封装请求参数
         packageParam(params, httpPost);
+
+        packageObj(obj,httpPost);
 
         // 创建httpResponse对象
         CloseableHttpResponse httpResponse = null;
@@ -302,6 +317,24 @@ public class HttpClientUtils {
     }
 
     /**
+     * Description: 封装请求参数
+     *
+     * @param object
+     * @param httpMethod
+     * @throws UnsupportedEncodingException
+     */
+    public static void packageObj(Object object, HttpEntityEnclosingRequestBase httpMethod)
+            throws UnsupportedEncodingException {
+        // 封装请求参数
+        if (object != null) {
+            String jsonString = JSON.toJSONString(object);
+            StringEntity entity = new StringEntity(jsonString, "UTF-8");
+            httpMethod.setEntity(entity);
+            httpMethod.setHeader("Content-Type", "application/json;charset=utf8");
+        }
+    }
+
+    /**
      * Description: 获得响应结果
      *
      * @param httpResponse
@@ -311,18 +344,22 @@ public class HttpClientUtils {
      * @throws Exception
      */
     public static HttpClientResult getHttpClientResult(CloseableHttpResponse httpResponse,
-                                                       CloseableHttpClient httpClient, HttpRequestBase httpMethod) throws Exception {
+                                                       CloseableHttpClient httpClient, HttpRequestBase httpMethod) {
         // 执行请求
-        httpResponse = httpClient.execute(httpMethod);
-
-        // 获取返回结果
-        if (httpResponse != null && httpResponse.getStatusLine() != null) {
-            String content = "";
-            if (httpResponse.getEntity() != null) {
-                content = EntityUtils.toString(httpResponse.getEntity(), ENCODING);
+        try {
+            httpResponse = httpClient.execute(httpMethod);
+            // 获取返回结果
+            if (httpResponse != null && httpResponse.getStatusLine() != null) {
+                String content = "";
+                if (httpResponse.getEntity() != null) {
+                    content = EntityUtils.toString(httpResponse.getEntity(), ENCODING);
+                }
+                return new HttpClientResult(httpResponse.getStatusLine().getStatusCode(), content);
             }
-            return new HttpClientResult(httpResponse.getStatusLine().getStatusCode(), content);
+        }catch (Exception e){
+          System.out.println(e.getMessage());
         }
+
         return new HttpClientResult(HttpStatus.SC_INTERNAL_SERVER_ERROR);
     }
 

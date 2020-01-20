@@ -39,18 +39,49 @@ public class IatService {
         IatSessionParam sessionParam = new IatSessionParam(requestDto.getSid(),rate);//创建参数
         logger.info("当前sessionParam 为 {}",sessionParam.toString());
         IatClient client = new IatClient(iatUrl,sessionParam);
-        IatSessionResponse iatSessionResponse = new IatSessionResponseImpl(requestDto.getSid(),requestDto.getIdx(),requestDto.getIsLast(),callBackUrl);
+        IatSessionResponse iatSessionResponse = new IatSessionResponseImpl(requestDto.getSid(),callBackUrl,rate);
         boolean ret = client.connect(iatSessionResponse);
         if(!ret){
-            logger.error("【连接异常】sid : {},idx : {}", requestDto.getSid(),requestDto.getIdx());
+            logger.error("【连接异常】sid : {}", requestDto.getSid());
             resMap.put(Commons.FLAG,Commons.ERROR_FLAG);
             return resMap;
         }
         try {
             byte [] bytes = Base64.decodeBase64(requestDto.getFrame());
-            client.post(bytes);
+            int z = 1028;//每次发送的字节数
+            //总长度
+            int bylenth =bytes.length;
+            //如果发送的字节小于1280，直接发送引擎
+            if(bylenth <=z){
+                client.post(bytes);
+            }else{
+                //如果是接收的字节数是1280的倍数，循环发送
+               if(bylenth % z == 0){
+                for(int j=0;j<bylenth;j+=z){
+                    byte [] s2 = new byte[z];
+                    System.arraycopy(bytes,j,s2,0,z);
+                    client.post(s2);
+                }
+               }else{
+                   //如果不是整数倍
+                  int n = bylenth/z;//倍数
+                  int n1 = bylenth%z;//余数
+                   for(int n2=0;n2<n*z;n2+=z){
+                       byte [] s3 = new byte[z];
+                       System.arraycopy(bytes,n2,s3,0,z);
+                       client.post(s3);
+
+                   }
+                   int start = bylenth - n*z;
+                   byte [] s4 = new byte[n1];
+                   System.arraycopy(bytes,start,s4,0,n1);
+                   client.post(s4);
+
+               }
+            }
+
             client.end();
-            logger.info("sid"+requestDto.getSid()+" idx:"+requestDto.getIdx() + "：音频数据发送完毕！等待结果返回...");
+            logger.info("sid"+requestDto.getSid() + "：音频数据发送完毕！等待结果返回...");
         }catch (Exception e){
            logger.error(e.getMessage(),e);
         }

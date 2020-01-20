@@ -36,10 +36,10 @@ public class IstService {
         sessionParam.setRate(rate);
         sessionParam.setDwa("");
         IstClient client  = new IstClient(istUrl,sessionParam);
-        IstSessionResponse istSessionResponse = new IstSessionResponseImpl(requestDto.getSid(),requestDto.getIdx(),callBackUrl);
+        IstSessionResponse istSessionResponse = new IstSessionResponseImpl(requestDto.getSid(),callBackUrl);
         boolean ret = client.connect(istSessionResponse);
         if(!ret){
-            logger.error("【连接异常】sid : {},idx : {}", requestDto.getSid(),requestDto.getIdx());
+            logger.error("【连接异常】sid : {}", requestDto.getSid());
             resMap.put(Commons.FLAG,Commons.ERROR_FLAG);
             return resMap;
         }
@@ -47,7 +47,7 @@ public class IstService {
             byte [] bytes = Base64.decodeBase64(requestDto.getFrame());
             client.post(bytes);
             client.end();
-            logger.info("sid"+requestDto.getSid()+" idx:"+requestDto.getIdx() + "：音频数据发送完毕！等待结果返回...");
+            logger.info("sid"+requestDto.getSid() + "：音频数据发送完毕！等待结果返回...");
         }catch (Exception e){
             logger.error(e.getMessage(),e);
         }
