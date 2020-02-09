@@ -13,13 +13,13 @@ import org.slf4j.LoggerFactory;
 public class IatSessionResponseImpl implements IatSessionResponse {
 
     private String sid;//音频sid
-    private String sampleRate;//采样率，8/16
+    private Integer isLast;//采样率，8/16
     private String callBackUrl;//回调地址
 
-    public IatSessionResponseImpl(String sid,String callBackUrl,String rate){
+    public IatSessionResponseImpl(String sid,String callBackUrl,Integer isLast){
         this.sid = sid;
         this.callBackUrl =callBackUrl;
-        this.sampleRate = rate;
+        this.isLast = isLast;
     }
 
     private Logger logger = LoggerFactory.getLogger(IatSessionResponseImpl.class);
@@ -33,7 +33,7 @@ public class IatSessionResponseImpl implements IatSessionResponse {
         String sentence = IatFormatSentence.formatSentence(iatSessionResult.getAnsStr());
         logger.info("sentence:{}",sentence);
         Commons.IAT_RESULT.add(sentence);
-        if(iatSessionResult.isEndFlag()){//如果已经解析完成
+        if(iatSessionResult.isEndFlag() || isLast == 1){//如果已经解析完成
             StringBuffer buffer = new StringBuffer();
             Commons.IAT_RESULT.stream().forEach(e->buffer.append(e));
             String sidres = sid;
