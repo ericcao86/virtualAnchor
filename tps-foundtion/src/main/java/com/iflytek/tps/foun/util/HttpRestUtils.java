@@ -185,6 +185,10 @@ public final class HttpRestUtils {
         return String.class.equals(clazz) ? (T)rs : JsonUtils.parseObject(rs, clazz);
     }
 
+    public static String doPost(String url,RequestBody body){
+        return withBody(url,Lists.newArrayList(),RequestMethod.POST, body);
+    }
+
     /** 同步 POST 请求带自定义 HEADER，有 RequestBody 请求体，返回单个对象 */
     public static <T> T post(String url, List<Pair<String, String>> headers, RequestBody body, Class<T> clazz){
         String rs = withBody(url, headers, RequestMethod.POST, body);

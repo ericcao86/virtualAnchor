@@ -14,7 +14,6 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 @SpringBootApplication(exclude={DataSourceAutoConfiguration.class, HibernateJpaAutoConfiguration.class})
 @EnableScheduling
-@EnableAutoConfiguration(exclude = {MultipartAutoConfiguration.class})
 public class WebApplication {
     private static Logger logger = LoggerFactory.getLogger(WebApplication.class);
     public static void main(String args[]){
