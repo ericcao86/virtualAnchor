@@ -36,13 +36,4 @@ public class IstController {
         return AppResponse.success(istService.doConvert(requestDto));
     }
 
-    @PostMapping(value = "file",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    @ResponseBody
-    @ApiOperation("录音文件上传转写")
-    public AppResponse fileTrans(@RequestParam(value = "sid") String sid, @RequestParam(value = "wav")MultipartFile file){
-      if(file.isEmpty()){
-          return AppResponse.failed(CommonCode.Error,"文件不存在，请重新上传");
-      }
-     return AppResponse.success(istService.fileTrans(sid,file));
-    }
 }

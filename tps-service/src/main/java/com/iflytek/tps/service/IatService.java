@@ -26,7 +26,7 @@ public class IatService {
     @Value("${iat.url}")
     private String iatUrl;
 
-    @Value("${callback.url}")
+    @Value("${iat.callback.url}")
     private String callBackUrl;
 
     public Map<String,String> doConvert(RequestDto requestDto){
@@ -38,7 +38,7 @@ public class IatService {
         IatSessionParam sessionParam = new IatSessionParam(requestDto.getSid(),rate);//创建参数
         logger.info("当前sessionParam 为 {}",sessionParam.toString());
         IatClient client = new IatClient(iatUrl,sessionParam);
-        IatSessionResponse iatSessionResponse = new IatSessionResponseImpl(requestDto.getSid(),callBackUrl,rate);
+        IatSessionResponse iatSessionResponse = new IatSessionResponseImpl(requestDto.getSid(),callBackUrl,requestDto.getIsLast());
         boolean ret = client.connect(iatSessionResponse);
         if(!ret){
             logger.error("【连接异常】sid : {}", requestDto.getSid());

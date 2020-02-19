@@ -29,7 +29,7 @@ public class IstService {
     @Value("${ist.url}")
     private String istUrl;
 
-    @Value("${callback.url}")
+    @Value("${ist.callback.url}")
     private String callBackUrl;
 
 
