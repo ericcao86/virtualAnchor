@@ -42,6 +42,7 @@ public class VirtualService {
             if(StringUtils.isNotBlank(taskId)){
                 CommonMap.getTaskMap().put(k,taskId);
             }
+
         });
 
         return "sucess";

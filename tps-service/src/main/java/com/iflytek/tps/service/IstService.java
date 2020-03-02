@@ -80,7 +80,7 @@ public class IstService {
 
                 }
             }
-            if(requestDto.getIsLast()==1){//最后一包
+            if(requestDto.getIslast()==1){//最后一包
                 client.end();
             }
             logger.info("sid"+requestDto.getSid() + "：音频数据发送完毕！等待结果返回...");

@@ -29,4 +29,13 @@ public class VirtualAddObject {
     public void setData(VirtualAddData data) {
         this.data = data;
     }
+
+    @Override
+    public String toString() {
+        return "VirtualAddObject{" +
+                "code='" + code + '\'' +
+                ", message='" + message + '\'' +
+                ", data=" + data +
+                '}';
+    }
 }

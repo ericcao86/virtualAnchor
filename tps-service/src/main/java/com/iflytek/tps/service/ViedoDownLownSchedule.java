@@ -2,6 +2,8 @@ package com.iflytek.tps.service;
 
 import com.alibaba.fastjson.JSONObject;
 import com.iflytek.tps.beans.virtual.VirtualAddObject;
+import com.iflytek.tps.foun.dto.DateFormat;
+import com.iflytek.tps.foun.util.DateUtils;
 import com.iflytek.tps.foun.util.HttpRestUtils;
 import com.iflytek.tps.service.util.CommonMap;
 import com.iflytek.tps.service.util.SignUtils;
@@ -17,6 +19,7 @@ import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Date;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Component
@@ -36,11 +39,12 @@ public class ViedoDownLownSchedule {
     @Scheduled(fixedDelay = 1000*10)
     public void downLoadVieo(){
         ConcurrentHashMap map = CommonMap.getTaskMap();
-        logger.info("定时器开始。。。");
+        String now = DateUtils.now( DateFormat.StrikeDateTime);
+        logger.info("定时器开始,当前时间{}",now);
         map.forEach((k,v)->{
             //k为指定的视频名称，v为任务的taskId
             logger.info("开始获取视频地址。。。。。");
-          String videoUrl = getVideoUrl((String) v);
+          String videoUrl = getVideoUrl((String)k, (String) v);
           logger.info("当前视频地址为{}",videoUrl);
           if(StringUtils.isNotBlank(videoUrl)){//如果已经生成了url
             //下载url
@@ -50,7 +54,7 @@ public class ViedoDownLownSchedule {
               CommonMap.getTaskMap().remove(k);
           }
         });
-        logger.info("定时器结束。。。");
+        logger.info("定时器结束,结束时间为{}",DateUtils.now( DateFormat.StrikeDateTime));
     }
 
     private String buildParamJson(String taskId){
@@ -61,11 +65,15 @@ public class ViedoDownLownSchedule {
         return taskJson;
     }
 
-    private String getVideoUrl(String taskId){
+    private String getVideoUrl(String key,String taskId){
         String url="";
         String taskJson = buildParamJson(taskId);
         RequestBody taskBody = RequestBody.create(JSON, taskJson);
         VirtualAddObject task= HttpRestUtils.post(taskUrl,taskBody, VirtualAddObject.class);
+        if(task.getData().getStatus() == 0){
+            CommonMap.getTaskMap().remove(key);
+        }
+        logger.info("查询返回当前信息 {}",task.toString());
         if(StringUtils.isNotBlank(task.getData().getUrl())){
             url = task.getData().getUrl();
         }

@@ -29,4 +29,11 @@ public class IatController {
         requestDto.verify();
        return AppResponse.success(iatService.doConvert(requestDto));
     }
+
+    @PostMapping(value = "test")
+    @ResponseBody
+    @ApiOperation("听写引擎服务接口")
+    public AppResponse<String> test(){
+        return AppResponse.success("SUCCESS");
+    }
 }
