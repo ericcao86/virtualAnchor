@@ -34,7 +34,7 @@ public class IatService {
         logger.info("请求参数request：{}",requestDto.toString());
         Map<String,String> resMap = new HashMap<>();
         resMap.put(Commons.FLAG,Commons.SUCEESS_FLAG);
-        String rate = "8K";
+        String rate = "16k";
         IatSessionParam sessionParam = new IatSessionParam(requestDto.getSid(),rate);//创建参数
         logger.info("当前sessionParam 为 {}",sessionParam.toString());
         IatClient client = new IatClient(iatUrl,sessionParam);
