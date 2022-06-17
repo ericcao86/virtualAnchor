@@ -57,7 +57,7 @@
         <poi.excel.version>3.16</poi.excel.version>
         <swagger2.version>2.6.1</swagger2.version>
         <freemarker.version>2.3.23</freemarker.version>
-        <fastjson.version>1.2.29</fastjson.version>
+        <fastjson.version>1.2.83</fastjson.version>
         <logback.version>1.2.1</logback.version>
     </properties>
 
