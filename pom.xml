@@ -27,7 +27,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jdk.version>1.8</jdk.version>
         <springboot.starter.version>1.5.3.RELEASE</springboot.starter.version>
-        <spring.version>4.3.6.RELEASE</spring.version>
+        <spring.version>6.0.0</spring.version>
         <!--aop reflections-->
         <aspectj.version>1.8.10</aspectj.version>
         <modelmapper.version>0.7.8</modelmapper.version>
